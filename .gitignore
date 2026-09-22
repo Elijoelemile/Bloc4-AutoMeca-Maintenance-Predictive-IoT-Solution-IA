@@ -1,0 +1,19 @@
+# Donnees (recuperees via Kaggle, jamais versionnees — voir README)
+data/
+
+# Environnement / secrets
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Modeles entraines (trop volumineux pour git, voir registre de modeles Bloc 4)
+models/*.joblib
+models/*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
