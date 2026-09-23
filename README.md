@@ -35,7 +35,8 @@ Predictive Maintenance* (déjà utilisé aux Blocs 2 et 3) :
 Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA/
 ├── data/                              # CSV Kaggle (non versionnes, voir Prerequis)
 ├── notebooks/
-│   └── 01_detection_anomalies.ipynb     # 5 etapes completes, code execute
+│   ├── 01_detection_anomalies.ipynb     # 5 etapes completes, code execute
+│   └── 02_prediction_rul.ipynb           # 5 etapes completes, code execute (analyse de survie)
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -53,4 +54,7 @@ Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA/
 
 ## Contenu
 
-- **`notebooks/01_detection_anomalies.ipynb`** — définition du problème, EDA, préparation, entraînement, évaluation du modèle de détection d'anomalies (Isolation Forest)
+- **`notebooks/01_detection_anomalies.ipynb`** — Isolation Forest, entraîné sur du comportement normal (fenêtres glissantes 24h). AUC 0,906 (test) / 0,931 (optimisé) / 0,932 ± 0,003 (5 folds temporels). Explicabilité SHAP (`rotate`/`volt` glissants en tête).
+- **`notebooks/02_prediction_rul.ipynb`** — Random Survival Forest, sur des épisodes de vie de composant (entre panne/maintenance, 68 % censurés — d'où le choix d'un modèle de survie plutôt qu'une régression classique). C-index 0,791 (test) / 0,795 (optimisé) / 0,784 ± 0,019 (5 folds temporels). Explicabilité SHAP (`age`, nombre d'erreurs récentes en tête).
+
+Les deux notebooks sont exécutés de bout en bout (pas de cellule vide ni de sortie fabriquée) et documentent chacun un vrai bug trouvé et corrigé pendant leur construction (erreur de seuils incohérents pour le premier, erreur de tri `merge_asof` et de fenêtre temporelle pour le second).
