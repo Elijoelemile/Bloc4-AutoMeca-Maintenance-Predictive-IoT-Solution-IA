@@ -5,6 +5,8 @@ numpy>=1.26
 # Modelisation
 scikit-learn>=1.4
 scikit-survival>=0.23
+shap>=0.44
+mlflow>=3.0
 
 # Visualisation
 matplotlib>=3.8

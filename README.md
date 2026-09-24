@@ -37,6 +37,8 @@ Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA/
 ├── notebooks/
 │   ├── 01_detection_anomalies.ipynb     # 5 etapes completes, code execute
 │   └── 02_prediction_rul.ipynb           # 5 etapes completes, code execute (analyse de survie)
+├── models/                              # modeles exportes (.joblib, non versionnes, voir Prerequis)
+├── mlruns/ · mlflow.db                   # registre MLflow local (SQLite, non versionne — voir Stack technique)
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -50,6 +52,8 @@ Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA/
 - 🐍 **Python / pandas / numpy** — préparation des données
 - 🌲 **scikit-learn** (Isolation Forest) — détection d'anomalies
 - ⏱️ **scikit-survival** (Random Survival Forest) — prédiction RUL
+- 🔍 **SHAP** — explicabilité des deux modèles
+- 📊 **MLflow** — suivi d'expériences et registre de modèles (local, SQLite — pas de serveur hébergé ; `mlflow ui --backend-store-uri sqlite:///mlflow.db` pour consulter)
 - 📓 **Jupyter** — notebooks d'entraînement, exécutés de bout en bout
 
 ## Contenu
@@ -58,3 +62,11 @@ Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA/
 - **`notebooks/02_prediction_rul.ipynb`** — Random Survival Forest, sur des épisodes de vie de composant (entre panne/maintenance, 68 % censurés — d'où le choix d'un modèle de survie plutôt qu'une régression classique). C-index 0,791 (test) / 0,795 (optimisé) / 0,784 ± 0,019 (5 folds temporels). Explicabilité SHAP (`age`, nombre d'erreurs récentes en tête).
 
 Les deux notebooks sont exécutés de bout en bout (pas de cellule vide ni de sortie fabriquée) et documentent chacun un vrai bug trouvé et corrigé pendant leur construction (erreur de seuils incohérents pour le premier, erreur de tri `merge_asof` et de fenêtre temporelle pour le second).
+
+### Suivi d'expériences et registre de modèles (MLflow)
+
+Chaque combinaison du grid search est loggée comme un run MLflow (paramètres + métrique), pas seulement le meilleur essai — remplace le suivi manuel (liste Python → DataFrame → tri) par un vrai historique consultable via `mlflow ui`. Le modèle final retenu est enregistré dans le **Model Registry** local (`isolation-forest-automeca`, `random-survival-forest-automeca`).
+
+En corrigeant le tri des résultats vers MLflow, un vrai bug méthodologique a été trouvé : `contamination` (Isolation Forest) ne modifie jamais l'AUC — seulement le seuil de décision interne, non mesuré par cette métrique — donc l'inclure dans une recherche par grille *optimisée sur l'AUC* ne pouvait produire qu'un choix arbitraire. Corrigé en sortant `contamination` de la grille et en la fixant explicitement à 0,05 (valeur déjà validée manuellement : 7 % de faux positifs sur 200 mesures réelles, voir le dépôt CI/CD) plutôt que de la laisser dépendre d'un tri non garanti stable.
+
+`mlruns/` et `mlflow.db` ne sont pas versionnés (mêmes principes que `data/` et `models/*.joblib`) — reproductibles en ré-exécutant les notebooks (`random_state=42` fixé partout).
