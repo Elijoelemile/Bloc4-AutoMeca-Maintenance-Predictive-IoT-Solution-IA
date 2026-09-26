@@ -10,10 +10,10 @@ Le projet est organisé en dépôts indépendants, un par domaine :
 
 | Dépôt | Contenu |
 |---|---|
-| [Bloc2-AutoMeca-Maintenance-Predictive-IoT-Architecture-Data](https://github.com/<user>/Bloc2-AutoMeca-Maintenance-Predictive-IoT-Architecture-Data) | Architecture de données : diagramme Edge/Cloud, modèle conceptuel, star schema, dictionnaire de données |
-| [Bloc3-AutoMeca-Maintenance-Predictive-IoT-Pipeline-Data](https://github.com/<user>/Bloc3-AutoMeca-Maintenance-Predictive-IoT-Pipeline-Data) | Pipelines d'ingestion et de transformation des données (ELT) |
-| [Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA](https://github.com/<user>/Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA) | Modèles de maintenance prédictive (entraînement) |
-| [Bloc4-AutoMeca-Maintenance-Predictive-IoT-CICD](https://github.com/<user>/Bloc4-AutoMeca-Maintenance-Predictive-IoT-CICD) | Intégration et déploiement continus |
+| [Bloc2-AutoMeca-Maintenance-Predictive-IoT-Architecture-Data](https://github.com/Elijoelemile/Bloc2-AutoMeca-Maintenance-Predictive-IoT-Architecture-Data) | Architecture de données : diagramme Edge/Cloud, modèle conceptuel, star schema, dictionnaire de données |
+| [Bloc3-AutoMeca-Maintenance-Predictive-IoT-Pipeline-Data](https://github.com/Elijoelemile/Bloc3-AutoMeca-Maintenance-Predictive-IoT-Pipeline-Data) | Pipelines d'ingestion et de transformation des données (ELT) |
+| [Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA](https://github.com/Elijoelemile/Bloc4-AutoMeca-Maintenance-Predictive-IoT-Solution-IA) | Modèles de maintenance prédictive (entraînement) |
+| [Bloc4-AutoMeca-Maintenance-Predictive-IoT-CICD](https://github.com/Elijoelemile/Bloc4-AutoMeca-Maintenance-Predictive-IoT-CICD) | Intégration et déploiement continus |
 
 ---
 
@@ -28,6 +28,11 @@ Predictive Maintenance* (déjà utilisé aux Blocs 2 et 3) :
 - **Prédiction de durée de vie résiduelle — RUL** (forêt de survie) —
   estime le temps restant avant la prochaine panne d'une machine,
   utilisé pour calculer le niveau de criticité d'un ticket GMAO.
+
+Ces deux modèles sont le cœur prédictif au service de l'objectif métier
+(**-30 % d'arrêts non planifiés sur 12 mois**, voir Bloc 1) : sans une
+détection fiable en amont, aucune action de maintenance préventive ne
+peut être déclenchée à temps.
 
 ## Structure
 
